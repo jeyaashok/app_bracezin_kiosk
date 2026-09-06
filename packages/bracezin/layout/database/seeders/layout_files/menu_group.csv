@@ -1,0 +1,7 @@
+title,slug,type,translate,icon,url,route,is_hidden,is_open_new_tab,is_active,order,image,role,permission,json
+Dashboard,dashboard,subheading,TJI.Dashboard,las la-tachometer-alt,/dashboard,/dashboard,0,0,1,1,,,,
+Application,application,subheading,TJI.Application,las la-laptop,/application,/application,0,0,1,1,,,,
+Master,master,subheading,TJI.Master, las la-radiation-alt,/master,/master,0,0,1,1,,,,
+Contact,contact,subheading,TJI.Contact,las la-address-book,/contact,/contact,0,0,1,1,,,,
+Report,report,subheading,TJI.Report,las la-chart-bar,/report,/report,0,0,1,1,,,,
+Account,account,subheading,TJI.Account,las la-tools,/account,/account,0,0,1,1,,,,

@@ -1,0 +1,10 @@
+title,slug,type,translate,icon,url,route,is_hidden,is_open_new_tab,is_active,function,order,menu,image,role,permission,json
+Product List,product-list,link,TJI.ProductList,las la-shopping-cart,/master/product/list,/master/product/list,0,0,1,,1,product,,,"view product, manage product",
+Category,category,link,TJI.Category,las la-tags,/master/category/list,/master/category/list,0,0,1,,2,product,,,"view category, manage category",
+Quotation,quotation,link,TJI.Quotation,las la-file-invoice,/sales/quotation/list,/sales/quotation/list,0,0,1,,1,sales,,,"view quotation, manage quotation",
+Sale Order,sale-order,link,TJI.SaleOrder,las la-file-invoice,/sales/sale-order/list,/sales/sale-order/list,0,0,1,,2,sales,,,"view sale order, manage sale order",
+Sale Invoice,sale-invoice,link,TJI.SaleInvoice,las la-receipt,/sales/sale-invoice/list,/sales/sale-invoice/list,0,0,1,,3,sales,,,"view sale invoice, manage sale invoice",
+Purchase Order,purchase-order,link,TJI.PurchaseOrder,las la-shopping-cart,/purchases/purchase-order/list,/purchases/purchase-order/list,0,0,1,,1,purchases,,,"view purchase order, manage purchase order",
+Expense List,expense-list,link,TJI.ExpenseList,las la-money-bill,/expenses/expense/list,/expenses/expense/list,0,0,1,,1,expenses,,,"view expense, manage expense",
+Expense Category,expense-category,link,TJI.ExpenseCategory,las la-tags,/expenses/expense-category/list,/expenses/expense-category/list,0,0,1,,2,expenses,,,"view expense category, manage expense category",
+Roles & Permissions,roles-permissions,link,TJI.RolesPermissions,las la-user-shield,/security/roles-permission/list,/security/roles-permission/list,0,0,1,,1,security,,,"view role permission, manage role permission",

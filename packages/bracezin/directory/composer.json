@@ -1,0 +1,50 @@
+{
+    "name": "bracezin/directory",
+    "description": "Its Maintain All directories Like images and files, documents",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeyakumar",
+            "email": "jeyaasok@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/database": "^13.0",
+        "illuminate/http": "^13.0",
+        "illuminate/routing": "^13.0",
+        "illuminate/support": "^13.0",
+        "intervention/image": "^2.4"
+    },
+    "require-dev": {
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "classmap": [
+            "database/migrations",
+            "database/seeders",
+            "src/Models",
+            "src/Imports",
+            "src/Repositories"
+        ],
+        "psr-4": {
+            "Directory\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel" : {
+            "providers": [
+                "Directory\\DirectoryServiceProvider",
+                "Intervention\\Image\\ImageServiceProvider"
+            ],
+            "aliases": {
+                "Media" : "Directory\\Facades\\Media"
+            }
+        },
+        "merge-plugin": {
+            "ignore-duplicates": true
+        }
+    }
+}

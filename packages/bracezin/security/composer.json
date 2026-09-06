@@ -1,0 +1,41 @@
+{
+    "name": "bracezin/security",
+    "description": "It Maintain All Security condtions",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeyakumar",
+            "email": "jeyaasok@gmail.com"
+        }
+    ],
+    "require": { },
+    "require-dev": { },
+    "minimum-stability": "dev",
+    "autoload": {
+        "classmap": [
+            "/database/migrations",
+            "/database/seeders",
+            "/src/Models",
+            "/src/Repositories",
+            "/src/Observers"
+        ],
+        "psr-4": {
+            "Security\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Security\\SecurityServiceProvider"
+            ],
+            "aliases": {
+                "Qr" : "Security\\Facades\\Qr",
+                "Otp" : "Security\\Facades\\Otp"
+            }
+        },
+        "merge-plugin": {
+            "ignore-duplicates": true
+        }
+    }
+}

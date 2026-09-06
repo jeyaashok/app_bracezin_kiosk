@@ -1,0 +1,51 @@
+{
+    "name": "bracezin/role",
+    "description": "Its Maintain All Roles",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeyakumar",
+            "email": "jeyaasok@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/database": "^13.0",
+        "illuminate/http": "^13.0",
+        "illuminate/routing": "^13.0",
+        "illuminate/support": "^13.0",
+        "spatie/laravel-permission": "^7.3"
+    },
+    "require-dev": {
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "classmap": [
+            "database/migrations",
+            "database/seeders",
+            "src/Models",
+            "src/Repositories",
+            "src/Imports",
+            "src/Observers"
+        ],
+        "psr-4": {
+            "Role\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Role\\RoleServiceProvider",
+                "Spatie\\Permission\\PermissionServiceProvider"
+            ],
+            "aliases": {
+                "Role" : "Role\\Facades\\Role"
+            }
+        },
+        "merge-plugin": {
+            "ignore-duplicates": true
+        }
+    }
+}

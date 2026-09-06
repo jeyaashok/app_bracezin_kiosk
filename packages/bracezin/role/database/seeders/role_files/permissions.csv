@@ -1,0 +1,15 @@
+module,name,guard
+Dashboard,view dashboard,admin
+Customer,view company,admin
+Customer,add company,admin
+Customer,manage company,admin
+Customer,delete company,admin
+Role Permission,view role permission,admin
+Role Permission,add role permission,admin
+Role Permission,manage role permission,admin
+Role Permission,delete role permission,admin
+System Setting,view system setting,admin
+System Setting,manage system setting,admin
+display info,manage display,device
+display setting,manage display,device
+display configuration,manage display,device

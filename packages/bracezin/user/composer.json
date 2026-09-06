@@ -1,0 +1,57 @@
+{
+    "name": "bracezin/user",
+    "description": "Its Maintain All Users",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeyakumar",
+            "email": "jeyaasok@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/database": "^13.0",
+        "illuminate/http": "^13.0",
+        "illuminate/routing": "^13.0",
+        "illuminate/support": "^13.0",
+        "laravel/sanctum": "^4.0",
+        "laracasts/flash": "^3.2",
+        "maatwebsite/excel": "^3.1"
+    },
+    "require-dev": {
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "classmap": [
+            "database/migrations",
+            "database/seeders",
+            "database/factories",
+            "src/Models",
+            "src/Repositories",
+            "src/Imports",
+            "src/Observers"
+        ],
+        "psr-4": {
+            "User\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "User\\UserServiceProvider",
+                "Laracasts\\Flash\\FlashServiceProvider",
+                "Maatwebsite\\Excel\\ExcelServiceProvider"
+            ],
+            "aliases": {
+                "Excel" : "Maatwebsite\\Excel\\Facades\\Excel",
+                "UserFcd" : "User\\Facades\\UserFcd",
+                "Person" : "User\\Facades\\Person"
+            }
+        },
+        "merge-plugin": {
+            "ignore-duplicates": true
+        }
+    }
+}

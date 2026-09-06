@@ -1,0 +1,54 @@
+{
+    "name": "bracezin/tji",
+    "description": "Its Maintain Common Project setups",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeyakumar",
+            "email": "jeyaasok@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/database": "^13.0",
+        "illuminate/http": "^13.0",
+        "illuminate/routing": "^13.0",
+        "illuminate/support": "^13.0",
+        "maatwebsite/excel": "^3.1"
+    },
+    "require-dev": {
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "classmap": [
+            "src/Models",
+            "src/Http/Middleware"
+        ],
+        "psr-4": {
+            "Tji\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel" : {
+            "providers": [
+                "Tji\\TjiServiceProvider",
+                "Maatwebsite\\Excel\\ExcelServiceProvider"
+            ],
+            "aliases": {
+                "Attribute" : "Tji\\Facades\\Attribute",
+                "Excel" : "Maatwebsite\\Excel\\Facades\\Excel",
+                "Tji" : "Tji\\Facades\\Tji",
+                "Validation" : "Tji\\Facades\\Validation",
+                "MainHelper" : "Tji\\Facades\\MainHelper",
+                "Constant" : "Tji\\Facades\\Constant",
+                "Sys" : "Tji\\Facades\\Constant",
+                "Jobs" : "Tji\\Facades\\Jobs"
+            }
+        },
+        "merge-plugin": {
+            "ignore-duplicates": true
+        }
+    }
+}

@@ -1,0 +1,42 @@
+{
+    "name": "bracezin/notification",
+    "description": "It Maintain All Notification settings",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeyakumar",
+            "email": "jeyaasok@gmail.com"
+        }
+    ],
+    "require": { },
+    "require-dev": { },
+    "minimum-stability": "dev",
+    "autoload": {
+        "classmap": [
+            "/database/migrations",
+            "/database/seeders",
+            "/database/factories",
+            "/src/Models",
+            "/src/Repositories",
+            "/src/Imports",
+            "/src/Observers"
+        ],
+        "psr-4": {
+            "Notification\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Notification\\NotificationServiceProvider"
+            ],
+            "aliases": {
+                "Notification" : "Notification\\Facades\\Notification"
+            }
+        },
+        "merge-plugin": {
+            "ignore-duplicates": true
+        }
+    }
+}

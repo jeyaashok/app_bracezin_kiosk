@@ -1,0 +1,16 @@
+<?php
+
+namespace Remark\Facades;
+
+use Illuminate\Support\Facades\Facade;
+
+class Remark extends Facade {
+	/**
+	 * Get the registered name of the component.
+	 *
+	 * @return string
+	 */
+	protected static function getFacadeAccessor() {
+		return \Remark\Helpers\Remark::class;
+	}
+}

@@ -1,0 +1,12 @@
+name, guard
+SuperAdmin,admin
+Admin,admin
+Agent,admin
+Staff,admin
+Company,admin
+Customer,admin
+Category A,device
+Category B,device
+Category C,device
+Category D,device
+Category E,device

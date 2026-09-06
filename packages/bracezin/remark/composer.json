@@ -1,0 +1,42 @@
+{
+    "name": "bracezin/remark",
+    "description": "It Maintain All Remark contents",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeyakumar",
+            "email": "jeyaasok@gmail.com"
+        }
+    ],
+    "require": { },
+    "require-dev": { },
+    "minimum-stability": "dev",
+    "autoload": {
+        "classmap": [
+            "/database/migrations",
+            "/database/seeders",
+            "/database/factories",
+            "/src/Models",
+            "/src/Repositories",
+            "/src/Imports",
+            "/src/Observers"
+        ],
+        "psr-4": {
+            "Remark\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Remark\\RemarkServiceProvider"
+            ],
+            "aliases": {
+                "Remark" : "Remark\\Facades\\Remark"
+            }
+        },
+        "merge-plugin": {
+            "ignore-duplicates": true
+        }
+    }
+}

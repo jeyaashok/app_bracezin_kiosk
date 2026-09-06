@@ -1,0 +1,35 @@
+title,value,type,category,description
+Customer Code,5000,number,customer,Customer Number
+Customer Prefix,CUS,text,customer,Customer Prefix Value
+Vendor Code,1000,number,vendor,Vendor Code 
+Vendor Prefix,VND,text,vendor,Vendor Prefix
+Agent Code,1000,number,agent,Agent Code 
+Agent Prefix,AGN,text,agent,Agent Prefix
+Staff Code,1000,number,staff,Staff Code 
+Staff Prefix,STF,text,staff,Staff Prefix
+Product Code,1000,number,product,Product Code 
+Product Prefix,PRD,text,product,Product Prefix
+Enquiry Code,1000,number,enquiry,Enquiry Code 
+Enquiry Prefix,ENQ,text,enquiry,Enquiry Prefix
+Request For Quote Code,1000,number,request_for_quote,Request For Quote Code 
+Request For Quote Prefix,RFQ,text,request_for_quote,Request For Prefix
+Quotation Prefix,QUT,text,sales,Quotation Prefix
+Quotation Code,5000,number,sales,Quotation Code
+Sale Order Code,1000,number,sales,Sale Order Code 
+Sale Order Prefix,SAL,text,sales,Sale Order Prefix
+Sale Invoice Code,1000,number,sales,Sale Invoice Code 
+Sale Invoice Prefix,SAL,text,sales,Sale Prefix
+Purchase Order Code,1000,number,purchases,Purchase Order Code 
+Purchase Order Prefix,PUR,text,purchases,Purchase Order Prefix
+Purchase Invoice Code,1000,number,purchases,Purchase Invoice Code 
+Purchase Invoice Prefix,PUR,text,purchases,Purchase Invoice Prefix
+Delivery Term Code,1000,number,purchases,Delivery Term Code 
+Delivery Term Prefix,DLY,text,purchases,Delivery Term Prefix
+Payment Term Code,1000,number,purchases,Payment Term Code 
+Payment Term Prefix,PAY,text,purchases,Payment Term Prefix
+Company Name,Bracezin Technologies Private Limited,text,company,Company Name
+Company Slogan,IT solutions,text,company,Company Slogan
+Company Address,"57, Thulasiram Street, Meenakshi Nagar, Avaniyapuram, Madurai - 625012.",address,company,Company Address
+Company Email,info@bracezin.com,email,company,Company Email
+Company Website,https://bracezin.com,link,company,Company Website
+Company Mobile,6382130306,number,company,Company Mobile

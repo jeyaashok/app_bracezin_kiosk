@@ -1,0 +1,11 @@
+resource_type,resource_id,name,extn
+,,favicon,png
+,,favicon_bg,png
+,,favicon_bw,png
+,,favicon,ico
+,,logo_horizontal,png
+,,logo_horizontal_bg,png
+,,logo_horizontal_bw,png
+,,logo_vertical,png
+,,logo_vertical_bg,png
+,,logo_vertical_bw,png
