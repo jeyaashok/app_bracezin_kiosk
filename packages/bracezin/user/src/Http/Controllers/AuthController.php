@@ -4,13 +4,14 @@ namespace User\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Route;
 use Arr;
+use Carbon\Carbon;
 use DB;
 use ErrorResponse;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Password;
 use Notification;
 use Otp;
 use Person;
@@ -51,7 +52,7 @@ class AuthController extends Controller
 
         try {
             $type = Arr::has($input, 'type') ? Str::slug($input['type'], '-') : Str::slug(config('userConfig.default_user_type'), '-');
-            $input['password'] = @$input['password'] ?: Config('userConfig.default_user_password', 'secret');
+            $input['password'] = @$input['password'] ?: Config('userConfig.default_user_password', 'P@ssw0rd');
             $input['name'] = @$input['name'] ?: @$input['username'] ?: @$input['email'];
             if ($type && ($type === 'customer' || $type === 'company' || $type === 'agent')) {
                 $input['type'] = $type;
@@ -120,23 +121,98 @@ class AuthController extends Controller
     {
         $input = $request->all();
         try {
-            $apiRequest = $request->is('api/*');
-            $user = User::where('email', '=', $input['email'])->first();
-            if ($user && $user->id) {
-                $user->update(['do_change_password' => 1, 'do_reset_password' => 1]);
-                $mail = Notification::sendLoginOtpMail($user);
-                $user = UserFcd::GetFormattedData($user->id);
+            $email = trim((string) @$input['email']);
+            if ($email === '') {
+                throw new ErrorResponse('Email is required', 405, 'info');
             }
 
-            if ($user && $user->id && $apiRequest) {
-                return Tji::successResponse($request, $user);
-            } elseif ($user && ! $apiRequest) {
-                return Tji::successResponse($request, $user);
+            $user = User::where('email', '=', $email)->first();
+            if (! $user || ! $user->id) {
+                throw new ErrorResponse('You May not have a Permission to Access this Portal, Please Contact Admin', 405, 'info');
+            } else {
+                $mail = Notification::sendLoginOtpMail($user);
+            }
+
+            $frontendUrl = rtrim((string) config('app.frontend_url', config('app.url', 'http://localhost')), '/');
+            $resetToken = Password::broker()->createToken($user);
+            $resetLink = $frontendUrl.'/auth/reset-password?token='.urlencode($resetToken).'&email='.urlencode($user->email);
+            $responseData = [
+                'message' => 'Password Reset token generated successfully',
+                'token' => $resetToken,
+                'email' => $user->email,
+                'reset_link' => $resetLink,
+                'frontend_url' => $frontendUrl,
+            ];
+
+            return Tji::successResponse($request, $responseData);
+        } catch (Exception $e) {
+            return Tji::errorResponse($request, $e);
+        }
+    }
+
+    public function resetForgetPassword(Request $request)
+    {
+        $input = $request->all();
+        Validation::checkOn($input, [
+            'otp' => 'required|string|min:4|max:4',
+            'password' => 'required|string|min:8|max:20',
+            'confirm_password' => 'required|string|min:8|max:20',
+            'email' => 'required|string|email|min:4|max:50',
+            'token' => 'required|string',
+        ]);
+        $otp = @$input['otp'] ?: null;
+        $email = @$input['email'] ?: null;
+        $mobile = @$input['mobile'] ?: null;
+        $username = @$input['username'] ?: null;
+        $password = @$input['password'] ?: null;
+        $confirmPassword = @$input['confirm_password'] ?: null;
+        $request['password_confirmation'] = $confirmPassword;
+        $token = @$input['token'] ?: null;
+        $apiRequest = $request->is('api/*');
+        try {
+            if ($password && $confirmPassword && $password !== $confirmPassword) {
+                throw new ErrorResponse('Confirm Password Not matched.', 405, 'info');
+            }
+            $user = ($email) ? User::where('email', '=', $email)->first() : null;
+            $user = ($mobile && ! ($user && $user->id)) ? User::where('mobile', '=', $mobile)->first() : $user;
+            $user = ($username && ! ($user && $user->id)) ? User::where('username', '=', $username)->first() : $user;
+            if ($user && $user->id) {
+                if (is_null($otp)) {
+                    throw new ErrorResponse('OTP Required, Enter Valid OTP.', 405, 'info');
+                }
+                if (! ($user->otp && $user->otp === $otp)) {
+                    throw new ErrorResponse('Please Enter Valid OTP.', 405, 'info');
+                }
+                $status = Password::reset(
+                    $request->only('email', 'password', 'password_confirmation', 'token'),
+                    function (User $user, string $password) {
+                        $user->forceFill(['password' => $password])->setRememberToken(Str::random(60));
+                        $user->save();
+                        // event(new PasswordReset($user));
+                    }
+                );
+
+                User::where('id', '=', $user->id)->update(['do_change_password' => 0, 'do_reset_password' => 0]);
+                Otp::removeOtp($user);
+                $this->clearOldTokens($user);
+
+                if ($apiRequest) {
+                    $userFormatted = ($user) ? UserFcd::GetFormattedData($user->id) : null;
+                    $userFormatted['token'] = auth()->guard('admin')->tokenById($user->id);
+
+                    return Tji::successResponse($request, $userFormatted);
+                } elseif (! $apiRequest) {
+                    $userToken = ($user) ? auth()->guard('admin')->tokenById($user->id) : null;
+                    $token = ['token' => $userToken];
+
+                    return Tji::successResponse($request, $token);
+                } else {
+                    throw new ErrorResponse('You May not have a Permission to Access this Portal, Please Contact Admin', 405, 'info');
+                }
             } else {
                 throw new ErrorResponse('You May not have a Permission to Access this Portal, Please Contact Admin', 405, 'info');
             }
         } catch (Exception $e) {
-
             return Tji::errorResponse($request, $e);
         }
     }
@@ -443,42 +519,61 @@ class AuthController extends Controller
 
     public function changePassword(Request $request)
     {
-        $input = $request->all();
-        $password = Arr::has($input, 'password') ? $input['password'] : null;
-        $confirmPassword = Arr::has($input, 'confirm_password') ? $input['confirm_password'] : null;
-        if ($password && $confirmPassword && $password === $confirmPassword) {
-            $authUser = auth('admin')->user();
-            if ($authUser && $authUser->id) {
-                $updateData = ['password' => $password, 'do_change_password' => 0, 'do_reset_password' => 0];
-                $authUser->fill($updateData)->save();
+        DB::beginTransaction();
+        try {
+            $input = $request->all();
+            $password = Arr::has($input, 'password') ? $input['password'] : null;
+            $confirmPassword = Arr::has($input, 'confirm_password') ? $input['confirm_password'] : null;
+            $user = null;
+            if ($password && $confirmPassword && $password === $confirmPassword) {
+                $authUser = auth('admin')->user();
+                if ($authUser && $authUser->id) {
+                    $updateData = ['password' => $password, 'do_change_password' => 0, 'do_reset_password' => 0];
+                    $authUser->fill($updateData)->save();
+                    $user = UserFcd::GetFormattedData($authUser->id);
+                    $user['token'] = auth()->guard('admin')->tokenById($user->id);
+                } else {
+                    throw new ErrorResponse('UnAuthorized Access, Token Not Available', 405, 'info');
+                }
             } else {
-                throw new ErrorResponse('UnAuthorized Access, Token Not Available', 405, 'info');
+                throw new ErrorResponse('Password and Confirm Password does not Matched.', 405, 'info');
             }
-        } else {
-            throw new ErrorResponse('Password and Confirm Password does not Matched.', 405, 'info');
-        }
+            DB::commit();
 
-        return Tji::successMessage('Password Changed Successfully');
+            return Tji::successResponse($request, $user);
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return Tji::errorResponse(request(), $e);
+        }
     }
 
     public function updatePassword(Request $request)
     {
-        $input = $request->all();
-        $password = Arr::has($input, 'password') ? $input['password'] : null;
-        $userId = Arr::has($input, 'user_id') ? $input['user_id'] : null;
-        if ($password && $userId) {
-            $user = User::find($userId);
-            if ($user && $user->id) {
-                $updateData = ['password' => $password];
-                $user->fill($updateData)->save();
+        DB::beginTransaction();
+        try {
+            $input = $request->all();
+            $password = Arr::has($input, 'password') ? $input['password'] : null;
+            $userId = Arr::has($input, 'user_id') ? $input['user_id'] : null;
+            if ($password && $userId) {
+                $user = User::find($userId);
+                if ($user && $user->id) {
+                    $updateData = ['password' => $password];
+                    $user->fill($updateData)->save();
+                } else {
+                    throw new ErrorResponse('UnAuthorized Access, Token Not Available', 405, 'info');
+                }
             } else {
-                throw new ErrorResponse('UnAuthorized Access, Token Not Available', 405, 'info');
+                throw new ErrorResponse('Password and Confirm Password does not Matched.', 405, 'info');
             }
-        } else {
-            throw new ErrorResponse('Password and Confirm Password does not Matched.', 405, 'info');
-        }
+            DB::commit();
 
-        return Tji::successMessage('Password Changed Successfully');
+            return Tji::successMessage('Password Changed Successfully');
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return Tji::errorResponse(request(), $e);
+        }
     }
 
     // To change user Active and Inactivate status
@@ -533,18 +628,38 @@ class AuthController extends Controller
         return Tji::successMessage('Status Changed Successfully');
     }
 
-    // End of To change user mobile verify active and inactive status
+    public function emailVerifyWithOtp(Request $request)
+    {
+        try {
+            $input = $request->all();
+            Validation::checkOn($input, ['otp' => 'required|min:4|max:4']);
+            $user = auth()->guard('admin')->user();
+            if ($user && $user->id && $user->ValidateOtp($input['otp'])) {
+                $user->update(['is_email_verified' => 1, 'email_verified_at' => Carbon::now()]);
+                $user = UserFcd::GetFormattedData($user->id);
+                $user['token'] = auth()->guard('admin')->tokenById($user->id);
+                $user->RemoveOtp();
 
-    // public function mailVerifyUpdate(Request $request){
-    //     $user = User::find($request->route('id'));
+                return Tji::successResponse($request, $user);
+            }
+            throw new ErrorResponse('You May not have a Permission to Verify Your Email, Please Contact Admin', 405, 'info');
+        } catch (Exception $e) {
+            return Tji::errorResponse($request, $e);
+        }
+    }
 
-    //     $user->is_email_verified = 1;
-    //     $user->save();
+    public function resendEmailOtp(Request $request)
+    {
+        try {
+            $user = auth()->guard('admin')->user();
+            if ($user && $user->id) {
+                Notification::sendLoginOtpMail($user);
 
-    //     $url = "https://ai-octopus.com/email-verify-success";
-    //     return Redirect::intended($url);
-
-    //     // return redirect(env('BASE_URL') . '/email/verify/success');
-    // }
-
+                return Tji::successResponse($request, $user);
+            }
+            throw new ErrorResponse('You May not have a Permission to Verify Your Email, Please Contact Admin', 405, 'info');
+        } catch (Exception $e) {
+            return Tji::errorResponse($request, $e);
+        }
+    }
 }

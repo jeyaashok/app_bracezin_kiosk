@@ -6,12 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-// use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notifiable;
 use Tji\Traits\TjiTrait;
 
 class MainModel extends Model
 {
-    use HasFactory, SoftDeletes, TjiTrait;
+    use HasFactory, Notifiable, SoftDeletes, TjiTrait;
 
     protected $appends = ['tableName', 'dataType'];
 

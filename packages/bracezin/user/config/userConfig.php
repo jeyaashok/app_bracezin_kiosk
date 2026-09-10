@@ -2,7 +2,7 @@
 
 return [
     'default_user_type' => 'customer',
-    'default_user_password' => 'secret',
+    'default_user_password' => 'P@ssw0rd',
 
     'api_authenticatable' => [
         'superadmin' => true,

@@ -17,7 +17,7 @@ class AllUserController extends PackageController
     {
         $input['username'] = @$input['username'] ?: @$input['email'] ?: @$input['mobile'] ?: @$input['name'];
         $input['type'] = @$input['type'] ?: Config('userConfig.default_user_type', 'customer');
-        $input['password'] = $input['password'] ?: Config('userConfig.default_user_password', 'secret');;
+        $input['password'] = $input['password'] ?: Config('userConfig.default_user_password', 'P@ssw0rd');
         if (Arr::get($input, 'email')) {
             Validation::checkOn($input, ['email' => 'required|string|email|min:4|max:50|unique:users,email']);
         }

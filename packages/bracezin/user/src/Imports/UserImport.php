@@ -22,7 +22,7 @@ class UserImport implements ToCollection, WithHeadingRow
             $userTypeSlug = Str::slug(trim($user['user_type']), '-');
             $email = trim($user['email']);
             $name = trim($user['username']);
-            $password = trim($user['password']);
+            $password = trim($user['password']) ?: Config('userConfig.default_user_password', 'P@ssw0rd');
 
             $user_model = User::query()->updateOrCreate(
                 ['email' => $email],

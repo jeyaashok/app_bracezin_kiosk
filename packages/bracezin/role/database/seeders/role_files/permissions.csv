@@ -1,9 +1,25 @@
 module,name,guard
 Dashboard,view dashboard,admin
-Customer,view company,admin
-Customer,add company,admin
-Customer,manage company,admin
-Customer,delete company,admin
+Admin,view admin,admin
+Admin,add admin,admin
+Admin,manage admin,admin
+Admin,delete admin,admin
+Agent,view agent,admin
+Agent,add agent,admin
+Agent,manage agent,admin
+Agent,delete agent,admin
+Staff,view staff,admin
+Staff,add staff,admin
+Staff,manage staff,admin
+Staff,delete staff,admin
+Company,view company,admin
+Company,add company,admin
+Company,manage company,admin
+Company,delete company,admin
+Customer,view customer,admin
+Customer,add customer,admin
+Customer,manage customer,admin
+Customer,delete customer,admin
 Role Permission,view role permission,admin
 Role Permission,add role permission,admin
 Role Permission,manage role permission,admin

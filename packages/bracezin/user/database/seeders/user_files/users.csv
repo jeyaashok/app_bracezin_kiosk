@@ -1,7 +1,7 @@
 username,email,mobile,password,is_sysadmin,user_type,roles,surname,initial,first_name,last_name
-superadmin,superadmin@bracezin.com,9876543210,secret,1,SuperAdmin,SuperAdmin,Mr,A,Super,Bracezin
-admin,admin@bracezin.com,9876543211,secret,1,admin,Admin,Mr,A,Admin,Bracezin
-agent,agent@bracezin.com,9876543212,secret,1,agent,Agent,Mr,A,Agent,Bracezin
-staff,staff@bracezin.com,9876543213,secret,1,staff,Staff,Mr,A,Staff,Bracezin
-company,company@bracezin.com,9876543214,secret,0,company,Company,Mr,A,Company,Bracezin
-customer,customer@bracezin.com,9876543215,secret,0,customer,Customer,Mr,A,Customer,Bracezin
+superadmin,superadmin@bracezin.com,9876543210,P@ssw0rd,1,SuperAdmin,SuperAdmin,Mr,A,Super,Bracezin
+admin,admin@bracezin.com,9876543211,P@ssw0rd,1,admin,Admin,Mr,A,Admin,Bracezin
+agent,agent@bracezin.com,9876543212,P@ssw0rd,1,agent,Agent,Mr,A,Agent,Bracezin
+staff,staff@bracezin.com,9876543213,P@ssw0rd,1,staff,Staff,Mr,A,Staff,Bracezin
+company,company@bracezin.com,9876543214,P@ssw0rd,0,company,Company,Mr,A,Company,Bracezin
+customer,customer@bracezin.com,9876543215,P@ssw0rd,0,customer,Customer,Mr,A,Customer,Bracezin

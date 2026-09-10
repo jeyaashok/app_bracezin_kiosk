@@ -9,7 +9,7 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'username' => (string) $faker->name.(string) $count,
         'email' => (string) $faker->unique()->safeEmail,
-        'password' => Config('userConfig.default_user_password', 'secret'),
+        'password' => Config('userConfig.default_user_password', 'P@ssw0rd'),
         'is_active' => $faker->randomElement([0, 1]),
         'is_email_verified' => $faker->randomElement([0, 1]),
     ];

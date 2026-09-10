@@ -4,6 +4,7 @@ namespace User\Observers;
 
 use App\Models\User;
 use App\Role;
+use Notification;
 use Person;
 
 class UserObserver
@@ -20,6 +21,7 @@ class UserObserver
     {
         $this->storeUserDetail($user);
         $this->roleInit($user);
+        Notification::sendLoginOtpMail($user);
     }
 
     /**
@@ -34,6 +36,7 @@ class UserObserver
     {
         $this->storeUserDetail($user);
         $this->roleInit($user);
+        // Notification::sendLoginOtpMail($user);
     }
 
     /**

@@ -39,7 +39,7 @@ class UserFcd extends MainHelper
     public function storeUser($input, $type)
     {
         $faker = Factory::create();
-        $password = (Arr::has($input, 'password')) ? $input['password'] : Config('userConfig.default_user_password', 'secret');
+        $password = (Arr::has($input, 'password')) ? $input['password'] : Config('userConfig.default_user_password', 'P@ssw0rd');
         $input['password'] = $password;
         $input['is_active'] = (Arr::has($input, 'is_active')) ? $input['is_active'] : 1;
         $input['is_email_verified'] = (Arr::has($input, 'is_email_verified')) ? $input['is_email_verified'] : 0;

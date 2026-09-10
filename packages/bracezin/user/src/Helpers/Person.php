@@ -59,7 +59,7 @@ class Person extends MainHelper
         $input['name'] = (string) $mobile;
         $input['mobile'] = (string) $mobile;
         $input['type'] = 'customer';
-        $input['password'] = Config('userConfig.default_user_password', 'secret');
+        $input['password'] = Config('userConfig.default_user_password', 'P@ssw0rd');
         $input = array_merge($input, $customerData);
         $customer = $this->allUserRepository->index(['mobile' => $mobile, 'type' => 'customer'])->first();
         if (! ($customer && $customer->id)) {

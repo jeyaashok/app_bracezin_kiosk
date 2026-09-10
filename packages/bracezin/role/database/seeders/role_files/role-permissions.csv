@@ -2,7 +2,7 @@ role,guard,permission
 SuperAdmin,admin,ALL_PERMISSIONS
 Admin,admin,ALL_PERMISSIONS
 Agent,admin,ALL_PERMISSIONS
-Staff,admin,view dashboard|view users|create users|update users|delete users|view roles|create roles|update roles|delete roles|view permissions|create permissions|update permissions|delete permissions
+Staff,admin,view dashboard|view company|create company|update company|delete company|view customer|create customer|update customer|delete customer|view roles|create roles|update roles|delete roles|view permissions|create permissions|update permissions|delete permissions
 Company,admin,ALL_PERMISSIONS
 Customer,admin,ALL_PERMISSIONS
 Category A,device,display info|display setting|display configuration

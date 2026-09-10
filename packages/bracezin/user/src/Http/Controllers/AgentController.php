@@ -23,7 +23,7 @@ class AgentController extends PackageController
     {
         $input['username'] = Arr::get($input, 'username') ? Arr::get($input, 'username') : (Arr::get($input, 'email') ? Arr::get($input, 'email') : (Arr::get($input, 'mobile') ? Arr::get($input, 'mobile') : Arr::get($input, 'name')));
         $input['type'] = Arr::get($input, 'type') ? Arr::get($input, 'type') : 'agent';
-        $input['password'] = Arr::get($input, 'password') ? Arr::get($input, 'password') : Config('userConfig.default_user_password', 'secret');
+        $input['password'] = Arr::get($input, 'password') ? Arr::get($input, 'password') : Config('userConfig.default_user_password', 'P@ssw0rd');
 
         if (Arr::get($input, 'email')) {
             Validation::checkOn($input, ['email' => 'required|string|email|min:4|max:50|unique:users,email']);
